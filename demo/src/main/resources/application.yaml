@@ -1,0 +1,20 @@
+server:
+  port: 8080
+  servlet:
+    context-path: /identity
+spring:
+  datasource:
+    driver-class-name: com.microsoft.sqlserver.jdbc.SQLServerDriver
+    url: jdbc:sqlserver://DESKTOP-KR6P5K8\SQLEXPRESS:1433;databaseName=ELEARNING;encrypt=true;trustServerCertificate=true
+    username: sManager
+    password: 123456
+
+  jpa:
+    hibernate:
+      ddl-auto: none
+      naming:
+        # 1. Implicit Strategy
+        implicit-strategy: org.hibernate.boot.model.naming.ImplicitNamingStrategyLegacyJpaImpl
+        # 2. Physical Strategy
+        physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
+    show-sql: true
