@@ -14,6 +14,8 @@ import jakarta.validation.Validator;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -57,6 +59,9 @@ public class UserService {
         Long nextValue = userRepository.getNextUserIdSequence();
         String formattedId = String.format("USR%04d", nextValue);
         User user = userMapper.toUser(request);
+        PasswordEncoder passwordEncoder=new BCryptPasswordEncoder(10);
+        user.setPasswordHash(passwordEncoder.encode(request.getPasswordHash()));
+
         user.setUserID(formattedId);
      return userMapper.toUserResponse(userRepository.save(user));
     }

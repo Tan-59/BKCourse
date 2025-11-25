@@ -18,7 +18,8 @@ public enum ErrorCode {
     INVALID_FULL_NAME(1006, "Full name must be at least 8 characters"),
     EMAIL_REQUIRED(1007, "Email can't be blank"),
     FULL_NAME_REQUIRED(1008, "Full name can't be blank"),
-    PASSWORD_REQUIRED(1009, "Password can't be blank");
+    PASSWORD_REQUIRED(1009, "Password can't be blank"),
+    UNAUTHENTICATED(1010, "Unauthenticated");
     int code;
     String message;
 }
