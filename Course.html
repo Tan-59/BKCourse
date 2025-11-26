@@ -1,1 +1,56 @@
+<!-- index.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Courses</title>
+    <link rel="stylesheet" href="/styles/Course.css">
+</head>
+<body>
+    <header>
+        <h1>Courses</h1>
+        <input type="text" id="searchInput" placeholder="Tìm khóa học...">
+    </header>
 
+
+    <section id="filterBar">
+        <select id="filterStatus">
+            <option value="All">Tất cả</option>
+            <option value="Public">Public</option>
+            <option value="Private">Private</option>
+        </select>
+
+
+        <select id="filterTopic">
+            <option value="All">Tất cả chủ đề</option>
+        </select>
+
+
+        <select id="sortOrder">
+            <option value="name_asc">Tên ↑</option>
+            <option value="name_desc">Tên ↓</option>
+            <option value="date_desc">Mới nhất</option>
+            <option value="date_asc">Cũ nhất</option>
+        </select>
+    </section>
+
+
+    <main id="courseList"></main>
+
+
+    <div id="courseModal" class="modal hidden">
+        <div class="modal-content">
+            <span id="closeModal" class="close">&times;</span>
+            <h2 id="modalCourseName"></h2>
+            <p id="modalCourseDescription"></p>
+            <p><strong>Trạng thái:</strong> <span id="modalStatus"></span></p>
+            <h3>Nội dung khóa học</h3>
+            <ul id="modalContents"></ul>
+        </div>
+    </div>
+
+
+    <script src="/scripts/Course.js"></script>
+</body>
+</html>
