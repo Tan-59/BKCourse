@@ -1,0 +1,59 @@
+
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Trang Chủ Học Viên - BKCourse</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="styles/student_home.css">
+</head>
+<body>
+    <header class="navbar">
+        <div class="logo">BKCourse</div>
+        <nav>
+            <a href="student_home.html" class="active"><i class="fas fa-home"></i> Trang Chủ</a>
+            <a href="Course.html"><i class="fas fa-book"></i> Khóa Học</a>
+            <a href="forum.html"><i class="fas fa-comments"></i> Diễn Đàn</a>
+        </nav>
+        <div class="user-profile">
+            <span id="userName">Nguyễn Văn A</span>
+            <i class="fas fa-user-circle profile-icon"></i>
+            <button onclick="logout()">Đăng xuất</button>
+        </div>
+    </header>
+
+    <main class="container">
+        <section class="dashboard">
+            <h2 class="welcome-message">Chào mừng trở lại, <span id="welcomeName">Nguyễn Văn A</span>!</h2>
+            <div class="stats-cards">
+                <div class="stat-card">
+                    <i class="fas fa-graduation-cap"></i>
+                    <h3><span id="coursesEnrolledCount">0</span></h3>
+                    <p>Khóa học đang học</p>
+                </div>
+                <div class="stat-card">
+                    <i class="fas fa-check-circle"></i>
+                    <h3><span id="coursesCompletedCount">0</span></h3>
+                    <p>Khóa học hoàn thành</p>
+                </div>
+                <div class="stat-card">
+                    <i class="fas fa-chart-line"></i>
+                    <h3><span id="avgProgress">0%</span></h3>
+                    <p>Tiến độ trung bình</p>
+                </div>
+            </div>
+        </section>
+
+        <section class="my-courses">
+            <h2>Khóa học của tôi</h2>
+            <div id="courseList" class="course-list">
+                </div>
+            <a href="Course.html" class="view-all-link">Xem tất cả khóa học <i class="fas fa-arrow-right"></i></a>
+        </section>
+
+    </main>
+
+    <script src="scripts/student_home.js"></script>
+</body>
+</html>
