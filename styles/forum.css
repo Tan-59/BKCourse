@@ -1,0 +1,89 @@
+/* forum.css - X-Math theme */
+
+/* Reset cơ bản */
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+body {
+    background-color: #f0f2f5; /* màu nền như trang chủ */
+    padding: 20px;
+}
+
+/* Tiêu đề */
+h2 {
+    text-align: center;
+    margin-bottom: 20px;
+    color: #007bff;
+}
+
+/* Container bài viết */
+.post {
+    background-color: #ffffff;
+    padding: 15px;
+    border-radius: 10px;
+    margin-bottom: 15px;
+    box-shadow: 0 2px 8px rgba(0, 123, 255, 0.15);
+    border-left: 4px solid #007bff;
+}
+
+.post h3 {
+    margin-bottom: 8px;
+    font-size: 18px;
+    color: #007bff;
+}
+
+.post p {
+    margin-bottom: 8px;
+    color: #555;
+}
+
+/* Input tạo bài viết */
+input#title, textarea#content {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 10px;
+    border-radius: 6px;
+    border: 1px solid #ccc;
+    font-size: 16px;
+    background-color: #e6f0ff; /* xanh nhạt */
+}
+
+/* Input bình luận */
+input[id^="comment-"] {
+    width: 80%;
+    padding: 6px;
+    margin-top: 6px;
+    border-radius: 6px;
+    border: 1px solid #ccc;
+    background-color: #e6f0ff;
+}
+
+/* Button */
+button {
+    padding: 8px 16px;
+    background-color: #007bff;
+    border: none;
+    border-radius: 6px;
+    color: #fff;
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+button:hover {
+    background-color: #0056b3;
+}
+
+/* Bình luận */
+.comment {
+    padding: 8px 12px;
+    margin-top: 5px;
+    border-left: 3px solid #007bff;
+    background-color: #f0f8ff; /* xanh nhạt */
+    border-radius: 6px;
+    color: #444;
+    font-size: 14px;
+}
