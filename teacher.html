@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BKCourse - Quản lý giảng viên</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <header class="header">
+        <div class="logo">
+            <h1>BKCourse</h1>
+            <p>Trang quản lý giảng viên</p>
+        </div>
+        <div class="user-profile">
+            <span class="greeting">Xin chào, PGS. Nguyễn Văn A</span>
+            <div class="avatar"></div>
+        </div>
+    </header>
+
+    <main class="container">
+        <section class="stats-grid">
+            <div class="card">
+                <span class="card-title">Tổng khóa học</span>
+                <strong class="card-value">4</strong>
+            </div>
+
+            <div class="card">
+                <span class="card-title">Tổng học viên</span>
+                <strong class="card-value">613</strong>
+            </div>
+        </section>
+
+        <section class="course-section">
+            <div class="section-header">
+                <h2>Danh sách khóa học của tôi</h2>
+            </div>
+
+            <div class="table-container">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Mã KH</th>
+                            <th>Tên khóa học</th>
+                            <th>Học viên</th>
+                            <th>Bài giảng</th>
+                            <th>Thời lượng</th>
+                            <th>Ngày bắt đầu</th>
+                            <th>Tiến độ</th>
+                            <th>Trạng thái</th>
+                        </tr>
+                    </thead>
+                    <tbody id="course-table-body">
+                        </tbody>
+                </table>
+            </div>
+        </section>
+    </main>
+
+    <script src="scripts/teacher.js"></script>
+</body>
+</html>
