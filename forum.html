@@ -1,48 +1,20 @@
-from flask import Flask, request, jsonify
-import sqlite3
-from users import get_user_name
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Diễn đàn BKCourse</title>
+    <link rel="stylesheet" href="forum.css">
+</head>
+<body>
+    <h2>Diễn đàn</h2>
+    <div>
+        <input id="title" placeholder="Tiêu đề bài viết">
+        <textarea id="content" placeholder="Nội dung bài viết"></textarea>
+        <button id="btnPost">Tạo bài viết</button>
+    </div>
 
-app = Flask(__name__)
-DB = "database.db"
+    <div id="posts"></div>
 
-def query_db(query, args=(), one=False):
-    conn = sqlite3.connect(DB)
-    cur = conn.cursor()
-    cur.execute(query, args)
-    rv = cur.fetchall()
-    conn.commit()
-    conn.close()
-    return (rv[0] if rv else None) if one else rv
-
-# Lấy danh sách bài viết
-@app.route("/posts", methods=["GET"])
-def get_posts():
-    rows = query_db("SELECT id, user_id, title, content FROM posts ORDER BY id DESC")
-    posts = [{"id": r[0], "author": get_user_name(r[1]), "title": r[2], "content": r[3]} for r in rows]
-    return jsonify(posts)
-
-# Tạo bài viết mới
-@app.route("/posts", methods=["POST"])
-def create_post():
-    data = request.json
-    query_db("INSERT INTO posts (user_id, title, content) VALUES (?, ?, ?)",
-             (data['user_id'], data['title'], data['content']))
-    return jsonify({"status": "ok"})
-
-# Lấy bình luận theo bài viết
-@app.route("/posts/<int:post_id>/comments", methods=["GET"])
-def get_comments(post_id):
-    rows = query_db("SELECT user_id, content FROM comments WHERE post_id=? ORDER BY id ASC", (post_id,))
-    comments = [{"author": get_user_name(r[0]), "content": r[1]} for r in rows]
-    return jsonify(comments)
-
-# Thêm bình luận
-@app.route("/posts/<int:post_id>/comments", methods=["POST"])
-def add_comment(post_id):
-    data = request.json
-    query_db("INSERT INTO comments (post_id, user_id, content) VALUES (?, ?, ?)",
-             (post_id, data['user_id'], data['content']))
-    return jsonify({"status": "ok"})
-
-if __name__ == "__main__":
-    app.run(debug=True)
+<script src="forum.js"></script>
+</body>
+</html>
