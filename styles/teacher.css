@@ -1,0 +1,100 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Arial, sans-serif; /* Font cơ bản */
+}
+
+body {
+    background-color: #fff; /* Nền trắng */
+    color: #000; /* Chữ đen */
+}
+
+/* Header */
+.header {
+    padding: 15px 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 2px solid #000; /* Viền đen đậm */
+    margin-bottom: 30px;
+}
+
+.logo h1 { font-size: 24px; text-transform: uppercase; }
+.user-profile { display: flex; align-items: center; gap: 10px; }
+.avatar {
+    width: 40px; height: 40px;
+    border: 1px solid #000;
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-weight: bold;
+}
+
+/* Container */
+.container { max-width: 1200px; margin: 0 auto; padding: 0 20px; }
+
+/* Stats Cards */
+.stats-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr; /* 2 cột */
+    gap: 20px;
+    margin-bottom: 30px;
+}
+
+.card {
+    border: 1px solid #000; /* Khung đen đơn giản */
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+}
+
+.card-title { font-size: 14px; color: #555; margin-bottom: 5px; }
+.card-value { font-size: 32px; }
+
+/* Table Section */
+.course-section {
+    border: 1px solid #000;
+    margin-bottom: 50px;
+}
+
+.section-header {
+    padding: 15px;
+    border-bottom: 1px solid #000;
+    font-weight: bold;
+}
+.section-header h2 { margin: 0; font-size: 18px; }
+
+.table-container { padding: 15px; }
+table { width: 100%; border-collapse: collapse; }
+
+th {
+    text-align: left;
+    padding: 10px;
+    border-bottom: 2px solid #000;
+    font-weight: bold;
+}
+
+td {
+    padding: 15px 10px;
+    border-bottom: 1px solid #ccc; /* Đường kẻ mờ phân cách dòng */
+    font-size: 14px;
+}
+tr:last-child td { border-bottom: none; }
+
+/* Progress Bar (Đen trắng) */
+.progress-wrapper {
+    display: flex; align-items: center; gap: 10px;
+    width: 150px;
+}
+.progress-bg {
+    flex: 1; height: 10px;
+    border: 1px solid #000; /* Khung thanh tiến độ */
+}
+.progress-fill {
+    height: 100%;
+    background-color: #000; /* Ruột màu đen */
+}
+.progress-text { font-size: 12px; font-weight: bold; width: 35px; }
+
+/* Status Text */
+.badge { font-weight: bold; font-size: 13px; }
