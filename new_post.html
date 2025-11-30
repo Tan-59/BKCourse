@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Tạo bài viết mới - BKCourse</title>
+<link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body>
+<header class="navbar">
+    <div class="logo">BKCourse</div>
+    <nav>
+        <a href="{{ url_for('student_home') }}"><i class="fas fa-home"></i> Trang Chủ</a>
+        <a href="{{ url_for('course') }}"><i class="fas fa-book"></i> Khóa Học</a>
+        <a href="{{ url_for('forum') }}" class="active"><i class="fas fa-comments"></i> Diễn Đàn</a>
+    </nav>
+    <div class="user-profile">
+        <span>{{ user_name }}</span>
+        <i class="fas fa-user-circle profile-icon"></i>
+        <button>Đăng xuất</button>
+    </div>
+</header>
+
+<main class="new-post-main">
+    <h2>Tạo bài viết mới</h2>
+    <form method="post" action="{{ url_for('new_post') }}">
+        <!-- Chọn chủ đề -->
+        <select name="topic" id="topic" required style="padding:10px; border-radius:5px; border:1px solid #ccc; font-size:1em; width:100%;">
+            <option value="">-- Chọn chủ đề --</option>
+            <option value="Python cơ bản">Python cơ bản</option>
+            <option value="Data Science">Data Science</option>
+            <option value="AI & Machine Learning">AI & Machine Learning</option>
+            <option value="Thiết kế Web">Thiết kế Web</option>
+        </select>
+
+        <!-- Tiêu đề -->
+        <input type="text" name="title" placeholder="Tiêu đề bài viết" required>
+
+        <!-- Nội dung -->
+        <textarea name="content" rows="6" placeholder="Nội dung bài viết..." required></textarea>
+
+        <!-- Nút đăng bài -->
+        <button type="submit"><i class="fas fa-paper-plane"></i> Đăng bài</button>
+    </form>
+</main>
+</body>
+</html>
