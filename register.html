@@ -1,29 +1,117 @@
-<!doctype html>
-<html>
+<!DOCTYPE html>
+<html lang="vi">
 <head>
-<meta charset="utf-8">
-<title>Register - BKCourse</title>
-<link rel="stylesheet" href="auth.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Đăng ký tài khoản</title>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #f1f5f9;
+            display: flex;
+            justify-content: center;
+            padding-top: 40px;
+        }
+        .register-box {
+            width: 400px;
+            background: white;
+            padding: 25px;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+        h2 {
+            text-align: center;
+            color: #2b6cb0;
+        }
+        .form-group {
+            margin-bottom: 18px;
+        }
+        label {
+            font-weight: bold;
+            display: block;
+            color: #333;
+        }
+        input, select {
+            width: 100%;
+            padding: 12px;
+            border-radius: 8px;
+            border: 1px solid #cbd5e0;
+            outline: none;
+            box-sizing: border-box; /* FIX độ lệch padding */
+            font-size: 15px;
+        }
+        input:focus, select:focus {
+            border-color: #3182ce;
+        }
+        button {
+            width: 100%;
+            padding: 12px;
+            background: #3182ce;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        button:hover {
+            background: #2b6cb0;
+        }
+        .link {
+            margin-top: 15px;
+            text-align: center;
+        }
+        .link a {
+            color: #3182ce;
+        }
+    </style>
 </head>
 <body>
-    <form id="registerForm">
-        <h2>Đăng ký tài khoản</h2>
 
-        <input type="text" id="fullname" placeholder="Họ và tên" required>
-        <input type="text" id="username" placeholder="Tên đăng nhập" required>
-        <input type="email" id="email" placeholder="Email" required>
-        <input type="password" id="password" placeholder="Mật khẩu" required>
-        <input type="password" id="confirm" placeholder="Nhập lại mật khẩu" required>
+<div class="register-box">
+    <h2><i class="fa-solid fa-user-plus"></i> Đăng ký</h2>
 
-        <button type="submit">Tạo tài khoản</button>
+    <form method="post">
 
-        <p>Đã có tài khoản? 
-            <a href="login.html">Đăng nhập</a>
-        </p>
+        <div class="form-group">
+            <label><i class="fa-solid fa-id-card"></i> Họ và tên</label>
+            <input type="text" name="full_name" placeholder="Nhập họ và tên" required>
+        </div>
 
-        <div id="msg"></div>
+        <div class="form-group">
+            <label><i class="fa-solid fa-user"></i> Tên đăng nhập</label>
+            <input type="text" name="username" placeholder="Tên đăng nhập" required>
+        </div>
+
+        <div class="form-group">
+            <label><i class="fa-solid fa-lock"></i> Mật khẩu</label>
+            <input type="password" name="password" placeholder="Nhập mật khẩu" required>
+        </div>
+
+        <div class="form-group">
+            <label><i class="fa-solid fa-lock"></i> Xác nhận mật khẩu</label>
+            <input type="password" name="confirm_password" placeholder="Nhập lại mật khẩu" required>
+        </div>
+
+        <!-- Vai trò -->
+        <div class="form-group">
+            <label><i class="fa-solid fa-users"></i> Vai trò</label>
+            <select name="role" required>
+                <option value="">-- Chọn vai trò --</option>
+                <option value="student">🎓 Học viên</option>
+                <option value="teacher">👨‍🏫 Giáo viên</option>
+            </select>
+        </div>
+
+        <button type="submit"><i class="fa-solid fa-check"></i> Đăng ký</button>
     </form>
 
-<script src="auth.js"></script>
+    <div class="link">
+        Đã có tài khoản? <a href="{{ url_for('login') }}">Đăng nhập</a>
+    </div>
+</div>
+
 </body>
 </html>
