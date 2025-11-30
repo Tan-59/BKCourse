@@ -1,20 +1,48 @@
 <!DOCTYPE html>
-<html>
+<html lang="vi">
 <head>
-    <meta charset="utf-8">
-    <title>Diễn đàn BKCourse</title>
-    <link rel="stylesheet" href="forum.css">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Diễn đàn BKCourse</title>
+<link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 </head>
 <body>
-    <h2>Diễn đàn</h2>
-    <div>
-        <input id="title" placeholder="Tiêu đề bài viết">
-        <textarea id="content" placeholder="Nội dung bài viết"></textarea>
-        <button id="btnPost">Tạo bài viết</button>
+<header class="navbar">
+    <div class="logo">BKCourse</div>
+    <nav>
+        <a href="{{ url_for('student_home') }}"><i class="fas fa-home"></i> Trang Chủ</a>
+        <a href="{{ url_for('course') }}"><i class="fas fa-book"></i> Khóa Học</a>
+        <a href="{{ url_for('forum') }}" class="active"><i class="fas fa-comments"></i> Diễn Đàn</a>
+    </nav>
+    <div class="user-profile">
+        <span>{{ user_name }}</span>
+        <i class="fas fa-user-circle profile-icon"></i>
+        <button>Đăng xuất</button>
     </div>
+</header>
 
-    <div id="posts"></div>
+<main class="forum-main">
+    <aside class="forum-sidebar">
+        <h2>Chủ đề</h2>
+        <ul>
+            <li><a href="#">Python cơ bản</a></li>
+            <li><a href="#">Data Science</a></li>
+            <li><a href="#">AI & Machine Learning</a></li>
+            <li><a href="#">Thiết kế Web</a></li>
+        </ul>
+    </aside>
 
-<script src="forum.js"></script>
+    <section class="posts-section">
+        <a href="{{ url_for('new_post') }}" class="new-post-btn"><i class="fas fa-plus"></i> Tạo bài viết mới</a>
+        {% for post in posts %}
+        <div class="post-card">
+            <h3>{{ post.title }}</h3>
+            <p>{{ post.content }}</p>
+            <div class="info">Người đăng: {{ post.author }} | {{ post.time }}</div>
+        </div>
+        {% endfor %}
+    </section>
+</main>
 </body>
 </html>
