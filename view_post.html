@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>{{ post.title }} - BKCourse</title>
+<link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body>
+<header class="navbar">
+    <div class="logo">BKCourse</div>
+    <nav>
+        <a href="{{ url_for('student_home') }}"><i class="fas fa-home"></i> Trang Chủ</a>
+        <a href="{{ url_for('course') }}"><i class="fas fa-book"></i> Khóa Học</a>
+        <a href="{{ url_for('forum') }}" class="active"><i class="fas fa-comments"></i> Diễn Đàn</a>
+    </nav>
+    <div class="user-profile">
+        <span>{{ user_name }}</span>
+        <i class="fas fa-user-circle profile-icon"></i>
+        <button>Đăng xuất</button>
+    </div>
+</header>
+
+<main class="forum-main">
+    <section class="posts-section">
+        <div class="post-card">
+            <h3>{{ post.title }}</h3>
+            <div class="info">Chủ đề: {{ post.topic }} | Người đăng: {{ post.author }} | {{ post.time }}</div>
+            <p>{{ post.content }}</p>
+        </div>
+
+        <div class="comments-section">
+            <h4>Các bình luận</h4>
+            {% for comment in post.comments %}
+            <div class="post-card" style="padding:10px;">
+                <p>{{ comment.content }}</p>
+                <div class="info">Bình luận bởi: {{ comment.author }} | {{ comment.time }}</div>
+            </div>
+            {% else %}
+            <p>Chưa có bình luận nào.</p>
+            {% endfor %}
+        </div>
+
+        <div class="new-comment">
+            <form method="post">
+                <textarea name="comment" rows="3" placeholder="Viết bình luận..." required style="width:100%; padding:10px; border-radius:5px; border:1px solid #ccc;"></textarea>
+                <button type="submit" style="margin-top:10px; background:#007bff; color:white; border:none; padding:10px 15px; border-radius:5px; cursor:pointer;"><i class="fas fa-paper-plane"></i> Bình luận</button>
+            </form>
+        </div>
+    </section>
+</main>
+</body>
+</html>
