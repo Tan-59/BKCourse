@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Courses | BKCourse</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+</head>
+<body class="bg-gray-100 font-sans">
+
+  <!-- Header -->
+  <header class="bg-blue-600 text-white shadow-md fixed w-full z-10">
+    <div class="max-w-7xl mx-auto flex justify-between items-center p-4">
+      <h1 class="text-xl font-bold">BKCourse</h1>
+      <nav>
+        <ul class="flex space-x-6 text-sm font-medium">
+          <li>
+            <a href="#" class="flex flex-col items-center hover:text-gray-200 transition">
+              <i class="fa-solid fa-house"></i>
+              Trang chủ
+            </a>
+          </li>
+          <li>
+            <a href="#" class="flex flex-col items-center hover:text-gray-200 transition">
+              <i class="fa-solid fa-book"></i>
+              Khóa học
+            </a>
+          </li>
+          <li>
+            <a href="#" class="flex flex-col items-center hover:text-gray-200 transition">
+              <i class="fa-solid fa-comments"></i>
+              Diễn đàn
+            </a>
+          </li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <!-- Main content -->
+  <main class="pt-28 max-w-7xl mx-auto px-4">
+    <!-- Filter bar -->
+    <section class="flex flex-col md:flex-row md:items-center md:justify-between gap-4 mb-6 bg-gray-200 p-4 rounded-md">
+
+    <!-- Label tìm kiếm -->
+    <div class="flex flex-col w-full md:w-1/2">
+        <label for="searchCourse" class="font-bold text-xl mb-4">
+        Tìm kiếm khóa học
+        </label>
+        <input
+        id="searchCourse"
+        type="text"
+        placeholder="Tìm khóa học..."
+        class="px-4 py-2 rounded-full border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-400 transition"
+        />
+    </div>
+
+    
+    </div>
+    </section>
+
+    <!-- Course List -->
+    <section id="courseList" class="flex flex-col gap-6 bg-gray-200 p-4 rounded-md"></section>
+
+  </main>
+
+  <!-- Modal -->
+  <div id="courseModal" class="fixed inset-0 bg-black/50 flex items-center justify-center hidden z-50">
+    <div class="bg-white p-6 rounded-xl shadow-2xl w-full max-w-2xl transform transition-transform scale-95 opacity-0 duration-200" id="modalContent">
+      <span id="closeModal" class="absolute top-3 right-4 cursor-pointer text-2xl font-bold hover:text-gray-500">&times;</span>
+      <h2 id="modalCourseName" class="text-2xl font-bold mb-2"></h2>
+      <p id="modalCourseDescription" class="text-gray-700 mb-3"></p>
+      <p><strong>Giảng viên:</strong> <span id="modalLecturer"></span></p>
+      <p><strong>Trạng thái:</strong> <span id="modalStatus"></span></p>
+      <p><strong>Đánh giá:</strong> <span id="modalRating"></span> | <strong>Học viên:</strong> <span id="modalEnroll"></span> | <strong>Ngày tạo:</strong> <span id="modalDate"></span></p>
+    </div>
+  </div>
+
+  <script src="scripts/Course.js"></script>
+  <script>
+    // Modal animation
+    const modal = document.getElementById('courseModal');
+    const modalContent = document.getElementById('modalContent');
+
+    function openModalAnim() {
+      modal.classList.remove('hidden');
+      setTimeout(() => {
+        modalContent.classList.remove('scale-95', 'opacity-0');
+      }, 10);
+    }
+
+    function closeModalAnim() {
+      modalContent.classList.add('scale-95', 'opacity-0');
+      setTimeout(() => {
+        modal.classList.add('hidden');
+      }, 200);
+    }
+
+    document.getElementById('closeModal').onclick = closeModalAnim;
+
+    // Thay đổi hàm openModal trong Course.js để gọi openModalAnim
+    const oldOpenModal = window.openModal;
+    window.openModal = function(course) {
+      oldOpenModal(course);
+      openModalAnim();
+    }
+  </script>
+</body>
+</html>

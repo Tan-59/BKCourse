@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Courses | Lecturer | BKCourse</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+</head>
+<body class="bg-gray-100 font-sans">
+
+  <!-- Header -->
+  <header class="bg-blue-600 text-white shadow-md fixed w-full z-10">
+    <div class="max-w-7xl mx-auto flex justify-between items-center p-4">
+      <h1 class="text-xl font-bold">BKCourse</h1>
+      <nav>
+        <ul class="flex space-x-6 text-sm font-medium">
+          <li>
+            <a href="#" class="flex flex-col items-center hover:text-gray-200 transition">
+              <i class="fa-solid fa-house"></i>
+              Trang chủ
+            </a>
+          </li>
+          <li>
+            <a href="#" class="flex flex-col items-center hover:text-gray-200 transition">
+              <i class="fa-solid fa-book"></i>
+              Khóa học
+            </a>
+          </li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <!-- Main content -->
+  <main class="pt-28 max-w-7xl mx-auto px-4">
+    <!-- Add Course Form -->
+    <section class="mb-6 bg-gray-200 p-4 rounded-md">
+    <h2 class="font-bold text-lg mb-3">Thêm khóa học mới</h2>
+    <div class="flex flex-col md:flex-row md:items-center gap-4">
+
+        <input id="newCourseName" type="text" placeholder="Tên khóa học" 
+        class="px-4 py-2 rounded-lg border border-gray-300 w-full md:w-1/3">
+
+        <input id="newCourseDescription" type="text" placeholder="Mô tả khóa học" 
+        class="px-4 py-2 rounded-lg border border-gray-300 w-full md:w-1/3">
+
+        <select id="newCourseTopic" 
+        class="px-4 py-2 rounded-lg bg-white border border-gray-300 w-full md:w-1/4">
+        <option value="">Chọn chủ đề</option>
+        </select>
+
+        <!-- ⭐ NEW: Select Public / Private -->
+        <select id="newCourseVisibility"
+        class="px-4 py-2 rounded-lg bg-white border border-gray-300 w-full md:w-1/4">
+        <option value="public">Công khai</option>
+        <option value="private">Riêng tư</option>
+        </select>
+
+        <button id="btnAddCourse"
+        class="bg-green-500 text-white px-2 py-2 rounded-lg hover:bg-green-700 transition w-full md:w-auto">
+        Thêm
+        </button>
+    </div>
+    </section>
+
+    <!-- Filter and Course List -->
+    <section class="bg-gray-200 p-4 rounded-md mb-6">
+
+    <!-- Title moved to the top inside the same section -->
+    <h2 class="font-bold text-xl mb-4">Khóa học của tôi</h2>
+
+    <!-- Search + Filters -->
+    <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
+        
+        <!-- Search box -->
+        <input
+        id="searchCourse"
+        type="text"
+        placeholder="Tìm khóa học..."
+        class="w-full md:w-1/2 px-4 py-2 rounded-full border border-gray-300
+                focus:outline-none focus:ring-2 focus:ring-blue-400 transition"
+        />
+
+        <!-- Filters -->
+        <div class="flex flex-col md:flex-row items-center gap-4">
+        
+        <select
+            id="filterTopic"
+            class="px-4 py-2 rounded-lg bg-white border border-gray-300 shadow-sm 
+                focus:outline-none focus:ring-2 focus:ring-blue-400 transition
+                w-full md:w-auto"
+        >
+            <option value="All">Tất cả chủ đề</option>
+        </select>
+
+        <div class="flex flex-col md:flex-row items-center gap-1 w-full md:w-auto">
+            <span class="text-gray-700 font-medium">Sắp xếp theo:</span>
+            <select
+            id="sortOrder"
+            class="px-2 py-2 rounded-lg bg-white border border-gray-300 shadow-sm 
+                    focus:outline-none focus:ring-2 focus:ring-blue-400 transition
+                    w-full md:w-auto"
+            >
+            <option value="stars">Đánh giá cao nhất</option>
+            <option value="enrollments">Số lượng học viên</option>
+            <option value="newest">Mới nhất</option>
+            </select>
+        </div>
+
+        <button
+            id="btnFilter"
+            class="bg-blue-600 text-white px-5 py-2 rounded-lg shadow
+                hover:bg-blue-700 transition w-full md:w-auto"
+        >
+            Lọc
+        </button>
+
+        </div>
+    </div>
+
+    </section>
+
+
+    <!-- Course List -->
+    <section id="courseList" class="flex flex-col gap-6 bg-gray-200 p-4 rounded-md"></section>
+  </main>
+
+  <!-- Modal -->
+  <div id="courseModal" class="fixed inset-0 bg-black/50 flex items-center justify-center hidden z-50">
+    <div class="bg-white p-6 rounded-xl shadow-2xl w-full max-w-2xl transform transition-transform scale-95 opacity-0 duration-200" id="modalContent">
+      <span id="closeModal" class="absolute top-3 right-4 cursor-pointer text-2xl font-bold hover:text-gray-500">&times;</span>
+      <h2 id="modalCourseName" class="text-2xl font-bold mb-2"></h2>
+      <p id="modalCourseDescription" class="text-gray-700 mb-3"></p>
+      <p><strong>Giảng viên:</strong> <span id="modalLecturer"></span></p>
+      <p><strong>Trạng thái:</strong> <span id="modalStatus"></span></p>
+      <p><strong>Đánh giá:</strong> <span id="modalRating"></span> | <strong>Học viên:</strong> <span id="modalEnroll"></span> | <strong>Ngày tạo:</strong> <span id="modalDate"></span></p>
+    </div>
+  </div>
+
+  <script src="{{ url_for('static', filename='Course.js') }}"></script>
+  <script>
+    const modal = document.getElementById('courseModal');
+    const modalContent = document.getElementById('modalContent');
+
+    function openModalAnim() {
+      modal.classList.remove('hidden');
+      setTimeout(() => {
+        modalContent.classList.remove('scale-95', 'opacity-0');
+      }, 10);
+    }
+
+    function closeModalAnim() {
+      modalContent.classList.add('scale-95', 'opacity-0');
+      setTimeout(() => {
+        modal.classList.add('hidden');
+      }, 200);
+    }
+
+    document.getElementById('closeModal').onclick = closeModalAnim;
+
+    const oldOpenModal = window.openModal;
+    window.openModal = function(course) {
+      oldOpenModal(course);
+      openModalAnim();
+    }
+  </script>
+</body>
+</html>
