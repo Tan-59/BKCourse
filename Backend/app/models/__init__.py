@@ -7,3 +7,4 @@ from .topic import Topic
 from .content import Content
 from .forum import Forum
 from .enrollment import Enrollment
+from .coursetopic import CourseTopic

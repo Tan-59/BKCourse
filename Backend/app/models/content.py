@@ -1,8 +1,9 @@
 from .. import db
+from app.utils.id_generator import generate_content_id
 
 class Content(db.Model):
     __tablename__ = 'contents'
-    ContentID = db.Column(db.String(20), primary_key=True)
+    ContentID = db.Column(db.String(20), primary_key=True, default=generate_content_id)
     Chapter = db.Column(db.Integer, nullable=False)
     ContentTitle = db.Column(db.String(255))
     ContentType = db.Column(db.String(100), nullable=False, default='Lesson')

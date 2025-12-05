@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Đăng nhập</title>
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        background: #f1f5f9;
+        display: flex;
+        justify-content: center;
+        align-items: flex-start;
+        height: 100vh;
+        padding-top: 40px;
+        margin: 0;
+    }
+
+    .login-box {
+        width: 400px;
+        background: white;
+        padding: 25px 30px;
+        border-radius: 12px;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.12);
+    }
+
+    h2 {
+        text-align: center;
+        color: #2b6cb0;
+        margin-bottom: 25px;
+    }
+
+    .form-group {
+        margin-bottom: 18px;
+    }
+
+    label {
+        font-weight: bold;
+        display: block; /* Input không lệch */
+        margin-bottom: 6px;
+        color: #333;
+    }
+
+    input {
+        width: 100%;          /* FIX TẤT CẢ LỆCH */
+        padding: 12px;
+        border-radius: 8px;
+        border: 1px solid #cbd5e0;
+        outline: none;
+        box-sizing: border-box;
+        font-size: 15px;
+    }
+
+    input:focus {
+        border-color: #3182ce;
+    }
+
+    button {
+        width: 100%;
+        padding: 12px;
+        background: #3182ce;
+        color: white;
+        border: none;
+        border-radius: 8px;
+        cursor: pointer;
+        font-size: 16px;
+        margin-top: 5px;
+    }
+
+    button:hover {
+        background: #2b6cb0;
+    }
+
+    .link {
+        margin-top: 15px;
+        text-align: center;
+    }
+
+    .link a {
+        color: #3182ce;
+        text-decoration: none;
+    }
+
+</style>
+</head>
+<body>
+
+<div class="login-box">
+    <h2><i class="fa-solid fa-right-to-bracket"></i> Đăng nhập</h2>
+
+    <form method="post">
+
+        <div class="form-group">
+            <label>Tên đăng nhập</label>
+            <input type="text" name="username" placeholder="Nhập tên đăng nhập" required>
+        </div>
+
+        <div class="form-group">
+            <label>Mật khẩu</label>
+            <input type="password" name="password" placeholder="Nhập mật khẩu" required>
+        </div>
+
+        <button type="submit"><i class="fa-solid fa-check"></i> Đăng nhập</button>
+    </form>
+
+    <div class="link">
+        Chưa có tài khoản? <a href="{{ url_for('register') }}">Đăng ký ngay</a>
+    </div>
+</div>
+
+</body>
+</html>

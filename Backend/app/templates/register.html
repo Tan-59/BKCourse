@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Đăng ký tài khoản</title>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #f1f5f9;
+            display: flex;
+            justify-content: center;
+            padding-top: 40px;
+        }
+        .register-box {
+            width: 400px;
+            background: white;
+            padding: 25px;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+        h2 {
+            text-align: center;
+            color: #2b6cb0;
+        }
+        .form-group {
+            margin-bottom: 18px;
+        }
+        label {
+            font-weight: bold;
+            display: block;
+            color: #333;
+        }
+        input, select {
+            width: 100%;
+            padding: 12px;
+            border-radius: 8px;
+            border: 1px solid #cbd5e0;
+            outline: none;
+            box-sizing: border-box;
+            font-size: 15px;
+        }
+        input:focus, select:focus {
+            border-color: #3182ce;
+        }
+        button {
+            width: 100%;
+            padding: 12px;
+            background: #3182ce;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        button:hover {
+            background: #2b6cb0;
+        }
+        .link {
+            margin-top: 15px;
+            text-align: center;
+        }
+        .link a {
+            color: #3182ce;
+        }
+    </style>
+</head>
+<body>
+
+<div class="register-box">
+    <h2><i class="fa-solid fa-user-plus"></i> Đăng ký</h2>
+
+    <form id="registerForm">
+
+        <div class="form-group">
+            <label><i class="fa-solid fa-id-card"></i> Họ và tên</label>
+            <input type="text" id="fullName" placeholder="Nhập họ và tên" required>
+        </div>
+
+        <div class="form-group">
+            <label><i class="fa-solid fa-user"></i> Tên đăng nhập</label>
+            <input type="text" id="username" placeholder="Tên đăng nhập" required>
+        </div>
+
+        <div class="form-group">
+            <label><i class="fa-solid fa-lock"></i> Mật khẩu</label>
+            <input type="password" id="password" placeholder="Nhập mật khẩu" required>
+        </div>
+
+        <div class="form-group">
+            <label><i class="fa-solid fa-lock"></i> Xác nhận mật khẩu</label>
+            <input type="password" id="confirmPassword" placeholder="Nhập lại mật khẩu" required>
+        </div>
+
+        <div class="form-group">
+            <label><i class="fa-solid fa-users"></i> Vai trò</label>
+            <select id="role" required>
+                <option value="">-- Chọn vai trò --</option>
+                <option value="student">🎓 Học viên</option>
+                <option value="lecturer">👨‍🏫 Giảng viên</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label><i class="fa-solid fa-envelope"></i> Email</label>
+            <input type="email" id="email" placeholder="Nhập email" required>
+        </div>
+
+        <div class="form-group">
+            <label><i class="fa-solid fa-phone"></i> Số điện thoại</label>
+            <input type="text" id="phone" placeholder="Nhập số điện thoại" required>
+        </div>
+
+        <button type="submit"><i class="fa-solid fa-check"></i> Đăng ký</button>
+    </form>
+
+    <div class="link">
+        Đã có tài khoản? <a href="{{ url_for('login') }}">Đăng nhập</a>
+    </div>
+</div>
+
+<script src="{{ url_for('static', filename='js/register.js') }}"></script>
+</body>
+</html>

@@ -2,6 +2,7 @@ from flask import Flask, render_template
 from flask_sqlalchemy import SQLAlchemy
 from app.config import Config
 from sqlalchemy import inspect, text
+from flask_cors import CORS
 # Khởi tạo SQLAlchemy (ORM)
 db = SQLAlchemy()
 
@@ -12,7 +13,7 @@ def create_app():
 
     # Khởi tạo db với app
     db.init_app(app)
-
+    CORS(app)
     # Route home
     @app.route('/')
     def home():
@@ -22,10 +23,14 @@ def create_app():
     from app.controllers.user_controller import bp as user_bp
     from app.controllers.course_controller import bp as course_bp
     from app.controllers.forum_controller import bp as forum_bp
+    from app.controllers.coursetopic_controller import bp as coursetopic_bp
+    from app.controllers.topic_controller import bp as topic_bp
 
     app.register_blueprint(user_bp, url_prefix='/users')
     app.register_blueprint(course_bp, url_prefix='/courses')
     app.register_blueprint(forum_bp, url_prefix='/forums')
+    app.register_blueprint(coursetopic_bp, url_prefix='/coursetopic')
+    app.register_blueprint(topic_bp, url_prefix='/topics')
 
     # **Tạo các bảng nếu chưa tồn tại**
     with app.app_context():
