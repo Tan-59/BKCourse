@@ -72,18 +72,16 @@ def register_user():
         Phone=phone,
         PasswordHash=generate_password_hash(password),
         FirstName=first_name,
-        LastName=last_name,
-        Role=role
+        LastName=last_name
     )
     db.session.add(user)
 
+    # tạo record ở bảng con
     if role.lower() == "lecturer":
-        lecturer = Lecturer(UserID=user_id)
-        db.session.add(lecturer)
+        db.session.add(Lecturer(LecturerID=user_id))
 
     if role.lower() == "student":
-        student = Student(UserID=user_id)
-        db.session.add(student)
+        db.session.add(Student(StudentID=user_id))
 
     db.session.commit()
 

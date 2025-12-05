@@ -17,7 +17,7 @@ def create_app():
     # Route home
     @app.route('/')
     def home():
-        return render_template('Course.html')  # template nằm ngoài app, ở folder templates/
+        return render_template('register.html')  # template nằm ngoài app, ở folder templates/
 
     # Import và đăng ký blueprint từ controller
     from app.controllers.user_controller import bp as user_bp
@@ -32,6 +32,7 @@ def create_app():
     app.register_blueprint(coursetopic_bp, url_prefix='/coursetopic')
     app.register_blueprint(topic_bp, url_prefix='/topics')
 
+    print("Using database at:", db.engine.url)
     # **Tạo các bảng nếu chưa tồn tại**
     with app.app_context():
         db.create_all()  # tạo các bảng nếu chưa có

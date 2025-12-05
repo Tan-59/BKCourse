@@ -4,15 +4,15 @@ window.onload = () => {
     form.onsubmit = async (e) => {
         e.preventDefault();
 
-        const fullName = document.getElementById("fullName").value.trim();
+        const firstName = document.getElementById("firstName").value.trim();
+        const lastName = document.getElementById("lastName").value.trim();
         const email = document.getElementById("email").value.trim();
         const phone = document.getElementById("phone").value.trim();
-        const username = document.getElementById("username").value.trim();
         const password = document.getElementById("password").value;
         const confirmPassword = document.getElementById("confirmPassword").value;
         const role = document.getElementById("role").value;
 
-        if (!fullName || !email || !phone || !username || !password || !confirmPassword || !role) {
+        if (!firstName || !lastName || !email || !phone || !password || !confirmPassword || !role) {
             alert("Vui lòng điền đầy đủ thông tin!");
             return;
         }
@@ -22,17 +22,11 @@ window.onload = () => {
             return;
         }
 
-        // tách họ và tên
-        const nameParts = fullName.split(" ");
-        const firstName = nameParts.pop();
-        const lastName = nameParts.join(" ") || firstName;
-
         const payload = {
             FirstName: firstName,
             LastName: lastName,
             Email: email,
             Phone: phone,
-            Username: username,
             Password: password,
             Role: role
         };
