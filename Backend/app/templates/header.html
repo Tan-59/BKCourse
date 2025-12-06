@@ -1,0 +1,31 @@
+<!-- templates/header.html -->
+<header class="bg-blue-600 text-white px-12 py-4 shadow flex justify-between items-center">
+    <div class="text-2xl font-bold">BKCourse</div>
+
+    <nav class="flex gap-3">
+        <a href="/homeStudent"
+           class="px-4 py-2 rounded hover:bg-blue-700 transition flex items-center gap-2 {{ 'bg-blue-700' if active=='home' }}">
+            <i class="fas fa-home"></i> Trang Chủ
+        </a>
+
+        <a id="courseLink"
+           class="px-4 py-2 rounded hover:bg-blue-700 transition flex items-center gap-2 {{ 'bg-blue-700' if active=='course' }}">
+            <i class="fas fa-book"></i> Khóa Học
+        </a>
+
+        <a href="/forum"
+           class="px-4 py-2 rounded hover:bg-blue-700 transition flex items-center gap-2 {{ 'bg-blue-700' if active=='forum' }}">
+            <i class="fas fa-comments"></i> Diễn Đàn
+        </a>
+    </nav>
+
+    <div class="flex items-center gap-4">
+        <span id="userName" class="font-medium"></span>
+        <i class="fas fa-user-circle text-2xl"></i>
+
+        <button onclick="logout()" class="bg-red-600 hover:bg-red-700 transition text-white px-4 py-2 rounded">
+            Đăng xuất
+        </button>
+    </div>
+    <script src="{{ url_for('static', filename='js/header.js') }}"></script>
+</header>

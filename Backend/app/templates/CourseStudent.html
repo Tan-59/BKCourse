@@ -10,27 +10,8 @@
 <body class="bg-gray-100 font-sans">
 
   <!-- Header -->
-  <header class="bg-blue-600 text-white shadow-md fixed w-full z-10">
-    <div class="max-w-7xl mx-auto flex justify-between items-center p-4">
-      <h1 class="text-xl font-bold">BKCourse</h1>
-      <nav>
-        <ul class="flex space-x-6 text-sm font-medium">
-          <li>
-            <a href="#" class="flex flex-col items-center hover:text-gray-200 transition">
-              <i class="fa-solid fa-house"></i>
-              Trang chủ
-            </a>
-          </li>
-          <li>
-            <a href="#" class="flex flex-col items-center hover:text-gray-200 transition">
-              <i class="fa-solid fa-book"></i>
-              Khóa học
-            </a>
-          </li>
-        </ul>
-      </nav>
-    </div>
-  </header>
+  {% extends "layout.html" %}
+  {% block content %}
 
   <!-- Main content -->
   <main class="pt-28 max-w-7xl mx-auto px-4">
@@ -138,7 +119,7 @@
     </div>
   </div>
 
-  <script src="{{ url_for('static', filename='js/Course.js') }}"></script>
+  <script src="{{ url_for('static', filename='js/CourseStudent.js') }}"></script>
   <script>
     const modal = document.getElementById('courseModal');
     const modalContent = document.getElementById('modalContent');
@@ -165,5 +146,6 @@
       openModalAnim();
     }
   </script>
+  {% endblock %}
 </body>
 </html>

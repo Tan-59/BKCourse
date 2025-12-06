@@ -86,3 +86,25 @@ def register_user():
     db.session.commit()
 
     return jsonify({"message": "Đăng ký thành công", "UserID": user_id})
+
+@bp.route('/userinfo')
+def get_user_info():
+    user = session.get('user')  # Hoặc dùng user ID từ token/localStorage
+    if not user:
+        return jsonify({"error": "No user"}), 401
+
+    user_id = user["UserID"]
+
+    if Lecturer.query.get(user_id):
+        role = "lecturer"
+    elif Student.query.get(user_id):
+        role = "student"
+    else:
+        role = "unknown"
+
+    return jsonify({
+        "UserID": user_id,
+        "FirstName": user.get("FirstName"),
+        "LastName": user.get("LastName"),
+        "Role": role
+    })

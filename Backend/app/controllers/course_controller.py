@@ -51,7 +51,6 @@ def get_courses_full():
     return jsonify(result)
 
 @bp.route('/create', methods=['POST'])
-@lecturer_required
 def create_course_full(lecturer_id):
     data = request.json
 

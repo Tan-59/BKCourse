@@ -3,6 +3,7 @@ from flask_sqlalchemy import SQLAlchemy
 from app.config import Config
 from sqlalchemy import inspect, text
 from flask_cors import CORS
+
 # Khởi tạo SQLAlchemy (ORM)
 db = SQLAlchemy()
 
@@ -17,7 +18,7 @@ def create_app():
     # Route home
     @app.route('/')
     def home():
-        return render_template('register.html')  # template nằm ngoài app, ở folder templates/
+        return render_template('CourseLecturer.html')  # template nằm ngoài app, ở folder templates/
 
     # Import và đăng ký blueprint từ controller
     from app.controllers.user_controller import bp as user_bp
@@ -25,14 +26,16 @@ def create_app():
     from app.controllers.forum_controller import bp as forum_bp
     from app.controllers.coursetopic_controller import bp as coursetopic_bp
     from app.controllers.topic_controller import bp as topic_bp
+    from app.controllers.auth_controller import bp as auth_bp
+    from app.views.page_view import page_bp
 
     app.register_blueprint(user_bp, url_prefix='/users')
     app.register_blueprint(course_bp, url_prefix='/courses')
     app.register_blueprint(forum_bp, url_prefix='/forums')
     app.register_blueprint(coursetopic_bp, url_prefix='/coursetopic')
     app.register_blueprint(topic_bp, url_prefix='/topics')
-
-    print("Using database at:", db.engine.url)
+    app.register_blueprint(auth_bp, url_prefix='/auth')
+    app.register_blueprint(page_bp)
     # **Tạo các bảng nếu chưa tồn tại**
     with app.app_context():
         db.create_all()  # tạo các bảng nếu chưa có

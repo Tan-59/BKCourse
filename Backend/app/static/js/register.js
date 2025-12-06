@@ -42,8 +42,25 @@ window.onload = () => {
 
             if (!res.ok) throw new Error(data.message || "Đăng ký thất bại");
 
+            // =============================
+            // LƯU USER VÀO LOCAL STORAGE
+            // =============================
+            localStorage.setItem("user", JSON.stringify({
+                UserID: data.UserID,
+                FirstName: firstName,
+                LastName: lastName,
+                Role: role.toLowerCase()
+            }));
             alert("Đăng ký thành công!");
-            form.reset();
+
+            // =============================
+            // CHUYỂN TRANG THEO ROLE
+            // =============================
+            if (role.toLowerCase() === "lecturer") {
+                window.location.href = "/homeLecturer";
+            } else {
+                window.location.href = "/homeStudent";
+            }
 
         } catch (err) {
             console.error(err);
