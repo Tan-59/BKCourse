@@ -15,10 +15,12 @@ def get_course_topics():
 @bp.route("/", methods=["POST"])
 def create_course_topic():
     data = request.json
+
     mapping = CourseTopic(
         CourseID=data["CourseID"],
         TopicID=data["TopicID"]
     )
     db.session.add(mapping)
     db.session.commit()
+
     return jsonify({"message": "CourseTopic created"})

@@ -1,10 +1,12 @@
 from .. import db
-from app.utils.id_generator import generate_topic_id
+from sqlalchemy import text
 
 class Topic(db.Model):
-    __tablename__ = 'topics'
-    TopicID = db.Column(db.String(20), primary_key=True, default=generate_topic_id)
-    TopicName = db.Column(db.String(200), nullable=False, unique=True)
+    __tablename__ = 'Topics'
 
-    course_topics = db.relationship('CourseTopic', backref='topic', lazy=True)
-    forum_topics = db.relationship('ForumTopic', backref='topic', lazy=True)
+    TopicID = db.Column(db.String(20), primary_key=True,
+                        server_default=text("('TOP' + RIGHT('0000' + CAST(NEXT VALUE FOR Seq_Topic AS VARCHAR(10)), 4))"))
+    TopicName = db.Column(db.NVARCHAR(200), nullable=False, unique=True)
+
+    course_topics = db.relationship('CourseTopic', back_populates='topic', lazy=True)
+    forum_topics = db.relationship('ForumTopic', back_populates='topic', lazy=True)

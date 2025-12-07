@@ -42,7 +42,7 @@ def course_lecturer():
 # =========================
 @page_bp.route("/forum")
 def forum_page():
-    return render_template("forum.html")
+    return render_template("Forum.html")
 
 # =========================
 # Register Page

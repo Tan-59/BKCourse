@@ -33,7 +33,7 @@ end
 # Unset irrelevant variables.
 deactivate nondestructive
 
-set -gx VIRTUAL_ENV /mnt/c/Users/ADMIN/Desktop/BKCourse/backend/venv
+set -gx VIRTUAL_ENV /mnt/c/Users/Admin/Desktop/CSDL_BTL2_Code/BKCourse/backend/venv
 
 set -gx _OLD_VIRTUAL_PATH $PATH
 set -gx PATH "$VIRTUAL_ENV/"bin $PATH

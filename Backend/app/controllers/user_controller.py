@@ -1,28 +1,36 @@
 from flask import Blueprint, jsonify, request
+from werkzeug.security import generate_password_hash
 from .. import db
 from app.models.user import User
 from app.models.student import Student
 from app.models.lecturer import Lecturer
-from werkzeug.security import generate_password_hash
 from app.utils.id_generator import generate_user_id
 
-bp = Blueprint('user', __name__)
+bp = Blueprint('user', __name__, url_prefix='/users')
 
-# Lấy tất cả users
+
+# ----------- GET ALL USERS -----------
 @bp.route('/', methods=['GET'])
 def get_users():
     users = User.query.all()
-    return jsonify([{
-        "UserID": u.UserID,
-        "Email": u.Email,
-        "FirstName": u.FirstName,
-        "LastName": u.LastName
-    } for u in users])
+    return jsonify([
+        {
+            "UserID": u.UserID,
+            "Email": u.Email,
+            "FirstName": u.FirstName,
+            "LastName": u.LastName
+        }
+        for u in users
+    ])
 
-# Tạo user mới (POST)
+# ----------- CREATE USER (ADMIN) -----------
 @bp.route('/', methods=['POST'])
 def create_user():
     data = request.json
+
+    if not data.get("Email") or not data.get("PasswordHash"):
+        return jsonify({"message": "Thiếu dữ liệu"}), 400
+
     user = User(
         UserID=data.get('UserID'),
         Email=data['Email'],
@@ -32,79 +40,73 @@ def create_user():
     )
     db.session.add(user)
     db.session.commit()
+
     return jsonify({"message": "User created", "UserID": user.UserID})
 
-@bp.route('/list', methods=['GET'])
-def list_users():
-    users = User.query.all()
-    return jsonify([
-        {
-            "UserID": u.UserID,
-            "FullName": f"{u.LastName} {u.FirstName}"
-        }
-        for u in users
-    ])
 
+# ----------- REGISTER USER -----------
 @bp.route("/register", methods=["POST"])
 def register_user():
-    data = request.json
-    first_name = data.get("FirstName")
-    last_name = data.get("LastName")
-    email = data.get("Email")
-    phone = data.get("Phone")
-    password = data.get("Password")
-    role = data.get("Role")
+    data = request.get_json() or {}
 
-    if not first_name or not last_name or not email or not password or not phone or not role:
+    required = ["FirstName", "LastName", "Email", "Phone", "Password", "Role"]
+    if any(not data.get(field) for field in required):
         return jsonify({"message": "Thiếu dữ liệu bắt buộc"}), 400
 
-    # check email hoặc phone đã tồn tại chưa
-    if User.query.filter_by(Email=email).first():
+    # Kiểm tra trùng email / phone
+    if User.query.filter_by(Email=data["Email"]).first():
         return jsonify({"message": "Email đã tồn tại"}), 400
-    if User.query.filter_by(Phone=phone).first():
+    if User.query.filter_by(Phone=data["Phone"]).first():
         return jsonify({"message": "Số điện thoại đã tồn tại"}), 400
 
     user_id = generate_user_id()
 
+    # Hash mật khẩu bằng werkzeug
+    hashed_password = generate_password_hash(data["Password"])
+
     user = User(
         UserID=user_id,
-        Email=email,
-        Phone=phone,
-        PasswordHash=generate_password_hash(password),
-        FirstName=first_name,
-        LastName=last_name
+        Email=data["Email"],
+        Phone=data["Phone"],
+        PasswordHash=hashed_password,
+        FirstName=data["FirstName"],
+        LastName=data["LastName"]
     )
+
     db.session.add(user)
 
-    # tạo record ở bảng con
-    if role.lower() == "lecturer":
+    # Gán role
+    role = data["Role"].lower()
+    if role == "lecturer":
         db.session.add(Lecturer(LecturerID=user_id))
-
-    if role.lower() == "student":
+    elif role == "student":
         db.session.add(Student(StudentID=user_id))
 
     db.session.commit()
 
-    return jsonify({"message": "Đăng ký thành công", "UserID": user_id})
+    return jsonify({"message": "Đăng ký thành công", "UserID": user_id}), 201
 
-@bp.route('/userinfo')
+
+# ----------- GET USER INFO -----------
+@bp.route('/userinfo', methods=['GET'])
 def get_user_info():
-    user = session.get('user')  # Hoặc dùng user ID từ token/localStorage
+    user_id = request.args.get("userid")
+
+    if not user_id:
+        return jsonify({"error": "UserID missing"}), 400
+
+    user = User.query.get(user_id)
     if not user:
-        return jsonify({"error": "No user"}), 401
+        return jsonify({"error": "User not found"}), 404
 
-    user_id = user["UserID"]
+    lecturer = Lecturer.query.get(user_id)
+    student = Student.query.get(user_id)
 
-    if Lecturer.query.get(user_id):
-        role = "lecturer"
-    elif Student.query.get(user_id):
-        role = "student"
-    else:
-        role = "unknown"
+    role = "lecturer" if lecturer else "student" if student else "unknown"
 
     return jsonify({
-        "UserID": user_id,
-        "FirstName": user.get("FirstName"),
-        "LastName": user.get("LastName"),
+        "UserID": user.UserID,
+        "FirstName": user.FirstName,
+        "LastName": user.LastName,
         "Role": role
     })

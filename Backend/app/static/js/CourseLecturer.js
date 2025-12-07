@@ -1,14 +1,3 @@
-// ===================== Data =====================
-let Users = [
-    { UserID: "USR0021", FullName: "Nguyễn Văn A" },
-    { UserID: "USR0022", FullName: "Lê Văn B" },
-    { UserID: "USR0023", FullName: "Trần Thị C" }
-];
-
-let Topics = [];
-let Courses = [];
-let CourseTopic = [];
-
 // ===================== Window Load =====================
 window.onload = async () => {
     await fetchTopics();
@@ -86,26 +75,27 @@ async function fetchCourses() {
             status: c.Status || "Private"
         }));
 
-        renderCourses(Courses);
+        await renderCourses(Courses);
     } catch (err) {
         console.error(err);
         alert("Lỗi khi load danh sách khóa học!");
     }
 }
 
-// ===================== Helper Functions =====================
-function getTopicName(topicID) {
-    const t = Topics.find(x => x.TopicID === topicID);
-    return t ? t.TopicName : null;
-}
-
-function getLecturerName(userID) {
-    const u = Users.find(x => x.UserID === userID);
-    return u ? u.FullName : "Không rõ";
+// ===================== Get Lecturer Name =====================
+async function getLecturerName(userID) {
+    try {
+        const res = await fetch(`http://localhost:5000/users/userinfo?userid=${userID}`);
+        if (!res.ok) return "Không rõ";
+        const data = await res.json();
+        return `${data.LastName} ${data.FirstName}`;
+    } catch {
+        return "Không rõ";
+    }
 }
 
 // ===================== Filter & Render =====================
-function filterCourses() {
+async function filterCourses() {
     const selectedTopicID = document.getElementById("filterTopic").value;
     const sortBy = document.getElementById("sortOrder").value;
     const keyword = document.getElementById("searchCourse").value.toLowerCase();
@@ -113,7 +103,9 @@ function filterCourses() {
     let filtered = [...Courses];
 
     if (selectedTopicID !== "All") {
-        const courseIDs = CourseTopic.filter(ct => ct.TopicID === selectedTopicID).map(ct => ct.CourseID);
+        const courseIDs = CourseTopic
+            .filter(ct => ct.TopicID === selectedTopicID)
+            .map(ct => ct.CourseID);
         filtered = filtered.filter(c => courseIDs.includes(c.CourseID));
     }
 
@@ -128,14 +120,17 @@ function filterCourses() {
         return 0;
     });
 
-    renderCourses(filtered);
+    await renderCourses(filtered);
 }
 
-function renderCourses(courseArray) {
+// ===================== Render Courses =====================
+async function renderCourses(courseArray) {
     const list = document.getElementById("courseList");
     list.innerHTML = "";
 
-    courseArray.forEach(c => {
+    for (let c of courseArray) {
+        const lecturerName = await getLecturerName(c.LecturerID);
+
         let card = document.createElement("div");
         card.className = "flex flex-col gap-2 bg-white p-4 w-full rounded-md cursor-pointer shadow-md";
 
@@ -144,22 +139,28 @@ function renderCourses(courseArray) {
                 ? "bg-green-100 text-green-700 w-fit px-4 py-1 rounded-[32px] font-bold text-xs"
                 : "bg-orange-100 text-orange-700 w-fit px-4 py-1 rounded-[32px] font-bold text-xs";
 
-        const lecturerName = getLecturerName(c.LecturerID);
-
         card.innerHTML = `
             <h3 class="font-semibold text-lg pb-1 border-b border-gray-300">${c.CourseName}</h3>
             <p class="text-gray-600 text-sm">Giảng viên: ${lecturerName}</p>
             <p class="text-gray-600 text-sm">Ngày tạo: ${c.CreatedDate}</p>
+
+            <div class="flex items-center gap-4 text-sm text-gray-700">
+                <span>⭐ ${c.AvgRating.toFixed(1)}</span>
+                <span>👥 ${c.TotalEnrollments} học viên</span>
+            </div>
+
             <p class="${statusClass}">${c.status}</p>
         `;
 
         card.onclick = () => openModal(c);
         list.appendChild(card);
-    });
+    }
 }
 
-function openModal(course) {
-    const lecturerName = getLecturerName(course.LecturerID);
+// ===================== Open Modal =====================
+async function openModal(course) {
+    const lecturerName = await getLecturerName(course.LecturerID);
+
     document.getElementById("modalCourseName").textContent = course.CourseName;
     document.getElementById("modalCourseDescription").textContent = course.CourseDescription || "";
     document.getElementById("modalLecturer").textContent = lecturerName;
@@ -175,16 +176,22 @@ function openModal(course) {
 async function addCourse() {
     const name = document.getElementById("newCourseName").value;
     const desc = document.getElementById("newCourseDescription").value;
-    const topicName = document.getElementById("newCourseTopic").value;
+    const topicID = document.getElementById("newCourseTopic").value;
     const visibility = document.getElementById("newCourseVisibility").value;
-    const lecturerID = "USR0021";
 
-    if (!name || !topicName) {
+    const user = JSON.parse(localStorage.getItem("user"));
+    if (!user || !user.UserID) {
+        alert("Không tìm thấy thông tin giảng viên trong localStorage!");
+        return;
+    }
+
+    const lecturerID = user.UserID;
+
+    if (!name || !topicID) {
         alert("Vui lòng nhập tên khóa học và chọn chủ đề!");
         return;
     }
 
-    const topicID = getTopicID(topicName);
     const newID = "CRS" + (Courses.length + 1).toString().padStart(3, "0");
 
     const payload = {
@@ -208,7 +215,6 @@ async function addCourse() {
         const data = await res.json();
         alert("Thêm khóa học thành công!");
 
-        // thêm vào mảng cục bộ và render
         Courses.push({
             CourseID: newID,
             CourseName: name,
@@ -221,7 +227,7 @@ async function addCourse() {
         });
 
         CourseTopic.push({ CourseID: newID, TopicID: topicID });
-        renderCourses(Courses);
+        await renderCourses(Courses);
 
     } catch (err) {
         console.error(err);

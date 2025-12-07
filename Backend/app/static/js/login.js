@@ -35,10 +35,7 @@ window.onload = () => {
 
             // Lưu thông tin user vào localStorage
             localStorage.setItem("user", JSON.stringify({
-                UserID: data.UserID,
-                FirstName: data.FirstName,
-                LastName: data.LastName,
-                Role: data.Role
+                UserID: data.UserID
             }));
 
             alert("Đăng nhập thành công!");
